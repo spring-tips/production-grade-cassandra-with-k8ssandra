@@ -1,0 +1,41 @@
+cassandra:
+  enabled: true
+  version: "4.0.0"
+  clusterName: "google-gke-template"
+  auth:
+    enabled: true
+  cassandraLibDirVolume:
+    storageClass: "standard-rwo"
+    size: "2048Gi"
+  heap:
+    size: "1G"
+    newGenSize: "1G"
+  resources:
+    requests:
+      cpu: "1000m"
+      memory: "2Gi"
+    limits:
+      cpu: "1000m"
+      memory: "2Gi"
+  datacenters:
+    - name: "dc1"
+      size: 3
+      racks:
+        - name: "us-central1-c"
+          affinityLabels:
+            topology.kubernetes.io/zone: "us-central1-c"
+stargate:
+  enabled: true
+  replicas: 1
+  cpuReqMillicores: 1000
+  cpuLimMillicores: 1000
+  heapMB: 8192
+reaper:
+  enabled: true
+monitoring:
+  grafana:
+    provision_dashboards: true
+  prometheus:
+    provision_service_monitors: true
+kube-prometheus-stack:
+  enabled: true
